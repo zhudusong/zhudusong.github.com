@@ -1,6 +1,9 @@
 ---
+layout: post
+category : lua
 tags : [lua, objective-c, cocos2d-x]
 ---
+{% include JB/setup %}
 
 # cocos2d-x中lua与objective-c的互相调用
 
@@ -31,13 +34,14 @@ className和methodName是objective-c中的类名和方法名，args必须是tabl
 
 CCLuaObjcBridge.mm中的代码片段如下。
 
-    case LUA_TFUNCTION:
-    	int functionId = retainLuaFunction(L, -1, NULL);
-    	[dict setObject:[NSNumber numberWithInt:functionId] forKey:key];
+	case LUA_TFUNCTION:
+		int functionId = retainLuaFunction(L, -1, NULL);
+		[dict setObject:[NSNumber numberWithInt:functionId] forKey:key];
 
 于是可以通过lua传入回调函数，在objective-c获取functionId来进行回调。
 
 ## 示例
+
 ### lua代码
 
 	local function callbackFunc(param)
@@ -53,10 +57,10 @@ LuaBridge::getStack()返回lua栈，我们可以通过它来执行一些lua的�
 	+ (void) someMethodName : (NSDictionary *) dict
 	{
 		int functionId = [[dict objectForKey:@"callback"] intValue];
-	    cocos2d::LuaBridge::pushLuaFunctionById(functionId);     //回调函数入栈
+		cocos2d::LuaBridge::pushLuaFunctionById(functionId);	 //回调函数入栈
 		cocos2d::LuaBridge::getStack()->pushString("from objc"); //参数入栈
-	    cocos2d::LuaBridge::getStack()->executeFunction(1);      //执行函数，参数个数为1
-	    cocos2d::LuaBridge::releaseLuaFunctionById(functionId);  //release之前被retain的函数
+		cocos2d::LuaBridge::getStack()->executeFunction(1);	     //执行函数，参数个数为1
+		cocos2d::LuaBridge::releaseLuaFunctionById(functionId);  //release之前被retain的函数
 	}
 
 当然，如果不需要立即执行回调，则可以先记录需要回调的functionId，在需要的时候再执行pushLuaFunctionById等语句。
