@@ -10,6 +10,8 @@ tags : [lua, objective-c, cocos2d-x]
 
 最近用cocos2d-x做项目，需要接第三方的sdk，ios端提供的api都是objective-c的，而我们是用lua作为脚本语言，所以需要学习一下lua对objective-c的调用，以及回调。
 
+## lua对objective-c的调用
+
 开始的时候搜到了一个[Lua-Objective-C-Bridge](https://github.com/torus/Lua-Objective-C-Bridge)，不过我在使用的时候提示找不到全局变量objc。
 
 我查了一下，LuaBridge.m中有如下语句表明设置了全局变量objc，并且在utils.lua中也可以访问。
